@@ -18,6 +18,11 @@ type PasswordResult struct {
 type UpdateResult struct {
 	golangsdk.ErrResult
 }
+
+type UpdateMetadataResult struct {
+	golangsdk.ErrResult
+}
+
 type Flavor struct {
 	Disk  string `json:"disk"`
 	Vcpus string `json:"vcpus"`

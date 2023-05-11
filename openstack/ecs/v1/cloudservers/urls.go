@@ -41,3 +41,7 @@ func passwordURL(client *golangsdk.ServiceClient, id string) string {
 func updateURL(sc *golangsdk.ServiceClient, serverID string) string {
 	return sc.ServiceURL("cloudservers", serverID)
 }
+
+func metadataURL(client *golangsdk.ServiceClient, id string) string {
+	return client.ServiceURL("cloudservers", id, "metadata")
+}

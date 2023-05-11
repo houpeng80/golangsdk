@@ -423,3 +423,34 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 	})
 	return
 }
+
+// UpdateMetadataOptsBuilder allows extensions to add additional parameters to
+// the Create request.
+type UpdateMetadataOptsBuilder interface {
+	ToMetadataUpdateMap() (map[string]interface{}, error)
+}
+
+// UpdateMetadataOpts specifies the base attributes that may be updated on an existing
+// server.
+type UpdateMetadataOpts struct {
+	Name        string  `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+	Hostname    string  `json:"hostname,omitempty"`
+}
+
+// ToMetadataUpdateMap formats an UpdateMetadataOpts structure into a request body.
+func (opts UpdateOpts) ToMetadataUpdateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "metadata")
+}
+
+func UpdateMetadata(client *golangsdk.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r UpdateMetadataResult) {
+	b, err := opts.ToMetadataUpdateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = client.Post(metadataURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{200},
+	})
+	return
+}
