@@ -187,7 +187,8 @@ func TestUpdateV3Cluster(t *testing.T) {
 
 		fmt.Fprintf(w, Output)
 	})
-	options := clusters.UpdateOpts{Spec: clusters.UpdateSpec{Description: "new description"}}
+	newDescription := "new description"
+	options := clusters.UpdateOpts{Spec: clusters.UpdateSpec{Description: &newDescription}}
 	actual, err := clusters.Update(fake.ServiceClient(), "daa97872-59d7-11e8-a787-0255ac101f54", options).Extract()
 	th.AssertNoErr(t, err)
 	expected := Expected
